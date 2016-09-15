@@ -1,6 +1,7 @@
 <h1>Goa Theme Options</h1>
 <?php settings_errors(); ?>
 <?php
+	$picture = esc_attr( get_option( 'profile_picture' ) );
 	$firstName = esc_attr( get_option( 'first_name' ) );
 	$lastName = esc_attr( get_option( 'last_name' ) );
 	$fullName = $firstName . ' ' . $lastName;
@@ -8,7 +9,10 @@
 ?>
 <div class="goa-theme-sidebar-preview">
 	<div class="goa-theme-sidebar">
-    	<h1 class="goa-theme-username"><?php print $fullName; ?></h1>
+    	<div class="image-container">
+        	<div id="profile-picture-preview" class="profile-picture" style="background-image: url(<?php print($picture); ?>); "></div>
+        </div>
+        <h1 class="goa-theme-username"><?php print $fullName; ?></h1>
         <h2 class="goa-theme-description"><?php print $description; ?></h2>
         <div class="icons-wrapper">
         	

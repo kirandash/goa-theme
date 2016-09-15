@@ -25,6 +25,7 @@ add_action( 'admin_menu','goa_theme_add_admin_page' );
 
 function goa_theme_custom_settings() {
 	
+	register_setting( 'goa-theme-settings-group', 'profile_picture' );
 	register_setting( 'goa-theme-settings-group', 'first_name' );
 	register_setting( 'goa-theme-settings-group', 'last_name' );
 	register_setting( 'goa-theme-settings-group', 'user_description' );
@@ -34,6 +35,7 @@ function goa_theme_custom_settings() {
 	
 	add_settings_section( 'goa-theme-sidebar-options', 'Sidebar Options', 'goa_theme_sidebar_options', 'goa_theme' );
 	
+	add_settings_field( 'sidebar-profile-picture', 'Profile Picture', 'goa_theme_sidebar_profile', 'goa_theme', 'goa-theme-sidebar-options' );
 	add_settings_field( 'sidebar-name', 'Full Name', 'goa_theme_sidebar_name', 'goa_theme', 'goa-theme-sidebar-options' );
 	add_settings_field( 'sidebar-description', 'Description', 'goa_theme_sidebar_description', 'goa_theme', 'goa-theme-sidebar-options' );
 	add_settings_field( 'sidebar-twitter', 'Twitter Handler', 'goa_theme_sidebar_twitter', 'goa_theme', 'goa-theme-sidebar-options' );
@@ -44,6 +46,12 @@ function goa_theme_custom_settings() {
 
 function goa_theme_sidebar_options() {
 	echo 'Cutsomize your sidebar Information';
+}
+
+function goa_theme_sidebar_profile() {
+	$picture = esc_attr( get_option( 'profile_picture' ) );
+	
+	echo '<input type="button" class="button button-secondary" id="upload-button" value="Upload Profile Picture"/><input type="hidden" id="profile-picture" name="profile_picture" value="'.$picture.'">';
 }
 
 function goa_theme_sidebar_name() {
