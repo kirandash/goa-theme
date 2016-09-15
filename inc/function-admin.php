@@ -14,7 +14,8 @@ function goa_theme_add_admin_page() {
 	add_menu_page( 'Goa Theme Options', 'Goa Theme', 'manage_options', 'goa_theme', 'goa_theme_create_page', get_template_directory_uri() . '/img/goa-theme-icon.png', 110 );
 	
 	// Generate Goa Theme Admin Sub Pages
-	add_submenu_page( 'goa_theme', 'Goa Theme Options', 'Settings', 'manage_options', 'goa_theme', 'goa_theme_create_page' );
+	add_submenu_page( 'goa_theme', 'Goa Theme Sidebar Options', 'Sidebar', 'manage_options', 'goa_theme', 'goa_theme_create_page' );
+	add_submenu_page( 'goa_theme', 'Goa Theme Options', 'Theme Options', 'manage_options', 'goa_theme_support', 'goa_theme_support_page' );
 	add_submenu_page( 'goa_theme', 'Goa Theme CSS Options', 'Custom CSS', 'manage_options', 'goa_theme_css', 'goa_theme_settings_page' );
 	
 	// Activate custom settings
@@ -24,7 +25,7 @@ function goa_theme_add_admin_page() {
 add_action( 'admin_menu','goa_theme_add_admin_page' );
 
 function goa_theme_custom_settings() {
-	
+	// Sidebar Options
 	register_setting( 'goa-theme-settings-group', 'profile_picture' );
 	register_setting( 'goa-theme-settings-group', 'first_name' );
 	register_setting( 'goa-theme-settings-group', 'last_name' );
@@ -42,8 +43,35 @@ function goa_theme_custom_settings() {
 	add_settings_field( 'sidebar-facebook', 'Facebook Handler', 'goa_theme_sidebar_facebook', 'goa_theme', 'goa-theme-sidebar-options' );
 	add_settings_field( 'sidebar-gplus', 'Google+ Handler', 'goa_theme_sidebar_gplus', 'goa_theme', 'goa-theme-sidebar-options' );
 	
+	// Theme Support Options
+	register_setting( 'goa-theme-support', 'post_formats', 'goa_theme_post_formats_callback' );
+	
+	add_settings_section( 'goa-theme-support-options', 'Support Options', 'goa_theme_support_options', 'goa_theme_support' );
+	
+	add_settings_field( 'post-formats', 'Post Formats', 'goa_theme_post_formats', 'goa_theme_support', 'goa-theme-support-options' );
 }
 
+// Post Formats Callback Function
+function goa_theme_post_formats_callback( $input ) {
+	return $input;
+}
+
+function goa_theme_support_options() {
+	echo 'Activate and Deactivate specific Theme Support Options';
+}
+
+function goa_theme_post_formats() {
+	$options = get_option( 'post_formats' );
+	$formats = array( 'aside', 'gallery', 'image', 'quote', 'status', 'video', 'audio', 'chat' );
+	$output = '';
+	foreach( $formats as $format ) {
+		$checked = (  isset($options[$format]) && $options[$format] == 1 ? 'checked' : '' );
+		$output .= '<label><input type="checkbox" id="'.$format.'" name="post_formats['.$format.']" value="1" '.$checked.'>'.$format.'</label><br>';
+	}
+	echo $output;
+}
+
+// Sidebar Options Functions
 function goa_theme_sidebar_options() {
 	echo 'Cutsomize your sidebar Information';
 }
@@ -92,9 +120,15 @@ function goat_theme_sanitize_twitter_handler( $input ) {
 	return $output;
 }
 
+// Template submenu functions
 function goa_theme_create_page() {
 	// generation of our admin page
 	require_once( get_template_directory() . '/inc/templates/goa-theme-admin.php');
+}
+
+function goa_theme_support_page() {
+	// generation of our admin page
+	require_once( get_template_directory() . '/inc/templates/goa-theme-support.php');
 }
 
 function goa_theme_settings_page() {
