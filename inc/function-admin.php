@@ -27,6 +27,7 @@ function goa_theme_custom_settings() {
 	
 	register_setting( 'goa-theme-settings-group', 'first_name' );
 	register_setting( 'goa-theme-settings-group', 'last_name' );
+	register_setting( 'goa-theme-settings-group', 'user_description' );
 	register_setting( 'goa-theme-settings-group', 'twitter_handler', 'goat_theme_sanitize_twitter_handler' );
 	register_setting( 'goa-theme-settings-group', 'facebook_handler' );
 	register_setting( 'goa-theme-settings-group', 'gplus_handler' );
@@ -34,6 +35,7 @@ function goa_theme_custom_settings() {
 	add_settings_section( 'goa-theme-sidebar-options', 'Sidebar Options', 'goa_theme_sidebar_options', 'goa_theme' );
 	
 	add_settings_field( 'sidebar-name', 'Full Name', 'goa_theme_sidebar_name', 'goa_theme', 'goa-theme-sidebar-options' );
+	add_settings_field( 'sidebar-description', 'Description', 'goa_theme_sidebar_description', 'goa_theme', 'goa-theme-sidebar-options' );
 	add_settings_field( 'sidebar-twitter', 'Twitter Handler', 'goa_theme_sidebar_twitter', 'goa_theme', 'goa-theme-sidebar-options' );
 	add_settings_field( 'sidebar-facebook', 'Facebook Handler', 'goa_theme_sidebar_facebook', 'goa_theme', 'goa-theme-sidebar-options' );
 	add_settings_field( 'sidebar-gplus', 'Google+ Handler', 'goa_theme_sidebar_gplus', 'goa_theme', 'goa-theme-sidebar-options' );
@@ -49,6 +51,12 @@ function goa_theme_sidebar_name() {
 	$lastName = esc_attr( get_option( 'last_name' ) );
 	
 	echo '<input type="text" name="first_name" value="'.$firstName.'" placeholder="First Name"> <input type="text" name="last_name" value="'.$lastName.'" placeholder="Last Name">';
+}
+
+function goa_theme_sidebar_description() {
+	$description = esc_attr( get_option( 'user_description' ) );
+	
+	echo '<input type="text" name="user_description" value="'.$description.'" placeholder="Description"><p class="write something smart.</p>"';
 }
 
 function goa_theme_sidebar_twitter() {
