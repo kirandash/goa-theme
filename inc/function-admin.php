@@ -16,6 +16,7 @@ function goa_theme_add_admin_page() {
 	// Generate Goa Theme Admin Sub Pages
 	add_submenu_page( 'goa_theme', 'Goa Theme Sidebar Options', 'Sidebar', 'manage_options', 'goa_theme', 'goa_theme_create_page' );
 	add_submenu_page( 'goa_theme', 'Goa Theme Options', 'Theme Options', 'manage_options', 'goa_theme_support', 'goa_theme_support_page' );
+	add_submenu_page( 'goa_theme', 'Goa Theme Contact Form', 'Contact Form', 'manage_options', 'goa_theme_contact', 'goa_theme_contact_form_page' );
 	add_submenu_page( 'goa_theme', 'Goa Theme CSS Options', 'Custom CSS', 'manage_options', 'goa_theme_css', 'goa_theme_settings_page' );
 	
 	// Activate custom settings
@@ -53,6 +54,12 @@ function goa_theme_custom_settings() {
 	add_settings_field( 'post-formats', 'Post Formats', 'goa_theme_post_formats', 'goa_theme_support', 'goa-theme-support-options' );
 	add_settings_field( 'custom-header', 'Custom Header', 'goa_theme_custom_header', 'goa_theme_support', 'goa-theme-support-options' );
 	add_settings_field( 'custom-background', 'Custom Background', 'goa_theme_custom_background', 'goa_theme_support', 'goa-theme-support-options' );
+	
+	// Contact Form Options
+	register_setting( 'goa-theme-contact-options', 'activate_contact' );
+	
+	add_settings_section( 'goa-theme-contact-section', 'Contact Form', 'goa_theme_contact_section', 'goa_theme_contact' );
+	add_settings_field( 'activate-form', 'Activate Contact Form', 'goa_theme_activate_contact', 'goa_theme_contact', 'goa-theme-contact-section' );
 }
 
 // Post Formats Callback Function
@@ -64,6 +71,10 @@ function goa_theme_support_options() {
 	echo 'Activate and Deactivate specific Theme Support Options';
 }
 
+function goa_theme_contact_section() {
+	echo 'Activate and Deactivate the built in contact form';
+}
+
 function goa_theme_post_formats() {
 	$options = get_option( 'post_formats' );
 	$formats = array( 'aside', 'gallery', 'image', 'quote', 'status', 'video', 'audio', 'chat' );
@@ -73,6 +84,12 @@ function goa_theme_post_formats() {
 		$output .= '<label><input type="checkbox" id="'.$format.'" name="post_formats['.$format.']" value="1" '.$checked.'>'.$format.'</label><br>';
 	}
 	echo $output;
+}
+
+function goa_theme_activate_contact() {
+	$options = get_option( 'activate_contact' );
+	$checked = ( $options == 1 ? 'checked' : '' );
+	echo '<label><input type="checkbox" id="activate_contact" name="activate_contact" value="1" '.$checked.'></label>';
 }
 
 function goa_theme_custom_header() {
@@ -150,6 +167,11 @@ function goa_theme_create_page() {
 function goa_theme_support_page() {
 	// generation of our admin page
 	require_once( get_template_directory() . '/inc/templates/goa-theme-support.php');
+}
+
+function goa_theme_contact_form_page() {
+	// generation of our contact page
+	require_once( get_template_directory() . '/inc/templates/goa-theme-contact-form.php');
 }
 
 function goa_theme_settings_page() {
