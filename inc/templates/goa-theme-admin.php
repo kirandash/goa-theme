@@ -23,5 +23,5 @@
 <form method="post" action="options.php" class="goa-theme-general-form">
 	<?php settings_fields( 'goa-theme-settings-group' ); ?>
     <?php do_settings_sections( 'goa_theme' ); ?>
-    <?php submit_button(); ?>
+    <?php submit_button( 'Save Changes', 'primary', 'btnSubmit' ); // To avoid js submit conflict ?>
 </form>

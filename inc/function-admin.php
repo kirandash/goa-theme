@@ -45,10 +45,14 @@ function goa_theme_custom_settings() {
 	
 	// Theme Support Options
 	register_setting( 'goa-theme-support', 'post_formats', 'goa_theme_post_formats_callback' );
+	register_setting( 'goa-theme-support', 'custom_header' );
+	register_setting( 'goa-theme-support', 'custom_background' );
 	
 	add_settings_section( 'goa-theme-support-options', 'Support Options', 'goa_theme_support_options', 'goa_theme_support' );
 	
 	add_settings_field( 'post-formats', 'Post Formats', 'goa_theme_post_formats', 'goa_theme_support', 'goa-theme-support-options' );
+	add_settings_field( 'custom-header', 'Custom Header', 'goa_theme_custom_header', 'goa_theme_support', 'goa-theme-support-options' );
+	add_settings_field( 'custom-background', 'Custom Background', 'goa_theme_custom_background', 'goa_theme_support', 'goa-theme-support-options' );
 }
 
 // Post Formats Callback Function
@@ -71,6 +75,18 @@ function goa_theme_post_formats() {
 	echo $output;
 }
 
+function goa_theme_custom_header() {
+	$options = get_option( 'custom_header' );
+	$checked = ( $options == 1 ? 'checked' : '' );
+	echo '<label><input type="checkbox" id="custom_header" name="custom_header" value="1" '.$checked.'>Activate the Custom Header</label>';
+}
+
+function goa_theme_custom_background() {
+	$options = get_option( 'custom_background' );
+	$checked = ( $options == 1 ? 'checked' : '' );
+	echo '<label><input type="checkbox" id="custom_background" name="custom_background" value="1" '.$checked.'>Activate the Custom Background</label>';
+}
+
 // Sidebar Options Functions
 function goa_theme_sidebar_options() {
 	echo 'Cutsomize your sidebar Information';
@@ -79,7 +95,12 @@ function goa_theme_sidebar_options() {
 function goa_theme_sidebar_profile() {
 	$picture = esc_attr( get_option( 'profile_picture' ) );
 	
-	echo '<input type="button" class="button button-secondary" id="upload-button" value="Upload Profile Picture"/><input type="hidden" id="profile-picture" name="profile_picture" value="'.$picture.'">';
+	if(empty($picture)){
+		echo '<input type="button" class="button button-secondary" id="upload-button" value="Upload Profile Picture"/><input type="hidden" id="profile-picture" name="profile_picture">';
+	}else{
+		echo '<input type="button" class="button button-secondary" id="upload-button" value="Change Profile Picture" /><input type="hidden" id="profile-picture" name="profile_picture" value="'.$picture.'"> <input type="button" class="button button-secondary" id="remove-picture" value="Remove">';
+	}
+	
 }
 
 function goa_theme_sidebar_name() {
