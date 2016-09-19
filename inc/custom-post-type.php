@@ -15,7 +15,7 @@ if( $contact == 1 ){
     // manage_yourpost/page/customposttype_posts_columns
     add_filter( 'manage_goa-contact_posts_columns', 'goa_theme_set_contact_columns' );
     // manage_yourpost/page/customposttype_posts_custom_column , this is a loop that goes through every post
-    // 10 - action executes after everything is ready, 2 is the number of arguments to pass,default is 1
+    // 10 - action executes after everything is ready, 2 is the number of arguments to pass,default is 1.
     add_action( 'manage_goa-contact_posts_custom_column', 'goa_theme_custom_contact_column', 10, 2 );
     add_action( 'add_meta_boxes', 'goa_theme_contact_add_meta_box' );
     add_action( 'save_post', 'goa_theme_save_contact_email_data' );
