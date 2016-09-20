@@ -17,7 +17,7 @@ function goa_theme_add_admin_page() {
 	add_submenu_page( 'goa_theme', 'Goa Theme Sidebar Options', 'Sidebar', 'manage_options', 'goa_theme', 'goa_theme_create_page' );
 	add_submenu_page( 'goa_theme', 'Goa Theme Options', 'Theme Options', 'manage_options', 'goa_theme_support', 'goa_theme_support_page' );
 	add_submenu_page( 'goa_theme', 'Goa Theme Contact Form', 'Contact Form', 'manage_options', 'goa_theme_contact', 'goa_theme_contact_form_page' );
-	add_submenu_page( 'goa_theme', 'Goa Theme CSS Options', 'Custom CSS', 'manage_options', 'goa_theme_css', 'goa_theme_settings_page' );
+	add_submenu_page( 'goa_theme', 'Goa Theme CSS Options', 'Custom CSS', 'manage_options', 'goa_theme_css', 'goa_theme_custom_css_page' );
 	
 	// Activate custom settings
 	add_action('admin_init','goa_theme_custom_settings');
@@ -60,6 +60,23 @@ function goa_theme_custom_settings() {
 	
 	add_settings_section( 'goa-theme-contact-section', 'Contact Form', 'goa_theme_contact_section', 'goa_theme_contact' );
 	add_settings_field( 'activate-form', 'Activate Contact Form', 'goa_theme_activate_contact', 'goa_theme_contact', 'goa-theme-contact-section' );
+    
+    // Custom CSS Options
+	register_setting( 'goa-theme-custom-css-options', 'custom_css', 'goat_theme_sanitize_custom_css' );
+	
+	add_settings_section( 'goa-theme-custom-css-section', 'Custom CSS', 'goa_theme_custom_css_section_callback', 'goa_theme_custom_css_page' );
+	add_settings_field( 'custom-css', 'Insert your custom CSS', 'goa_theme_custom_css_callback', 'goa_theme_custom_css_page', 'goa-theme-custom-css-section' );
+}
+
+// Custom CSS Callback Function
+function goa_theme_custom_css_section_callback() {
+	echo 'Customize Goa Theme with your own CSS';
+}
+
+function goa_theme_custom_css_callback() {
+	$css = get_option( 'custom_css' );
+    $css = empty($css) ? '/* Goa Custom CSS */' : $css;
+	echo '<div id="customCss" placeholder="Goa Custom CSS">'.$css.'</div><textarea name="custom_css" id="custom_css" style="visibility:hidden; display:none;">'.$css.'</textarea>';
 }
 
 // Post Formats Callback Function
@@ -158,6 +175,11 @@ function goat_theme_sanitize_twitter_handler( $input ) {
 	return $output;
 }
 
+function goat_theme_sanitize_custom_css( $input ) {
+	$output = esc_textarea($input);
+	return $output;
+}
+
 // Template submenu functions
 function goa_theme_create_page() {
 	// generation of our admin page
@@ -174,7 +196,7 @@ function goa_theme_contact_form_page() {
 	require_once( get_template_directory() . '/inc/templates/goa-theme-contact-form.php');
 }
 
-function goa_theme_settings_page() {
+function goa_theme_custom_css_page() {
 	// generation of our admin page
-	echo '<h1>Goa Custom CSS</h1>';
+	require_once( get_template_directory() . '/inc/templates/goa-theme-custom-css.php');
 }
