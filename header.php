@@ -42,7 +42,8 @@
                                     wp_nav_menu( array(
                                         'theme_location'    => 'primary',
                                         'container'         => false,
-                                        'menu_class'        => 'nav navbar-nav'
+                                        'menu_class'        => 'nav navbar-nav',
+                                        'walker'            => new goa_wp_bootstrap_navwalker()
                                     ) );
                                 ?>
                             </nav>
