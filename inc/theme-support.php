@@ -27,3 +27,11 @@ $background = get_option('custom_background');
 if($background==1){
 	add_theme_support('custom-background');
 }	
+
+/* Activate Nav Menu Option */
+function goa_theme_register_nav_menu() {
+    register_nav_menu( 'primary','Header Navigation Menu' );
+}
+
+add_action( 'after_setup_theme', 'goa_theme_register_nav_menu' );
+
