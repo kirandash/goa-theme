@@ -1,0 +1,71 @@
+@font-face {
+  font-family: 'goa-icon';
+  src:  url('../fonts/goa-icon.eot?y0fznb');
+  src:  url('../fonts/goa-icon.eot?y0fznb#iefix') format('embedded-opentype'),
+    url('../fonts/goa-icon.ttf?y0fznb') format('truetype'),
+    url('../fonts/goa-icon.woff?y0fznb') format('woff'),
+    url('../fonts/goa-icon.svg?y0fznb#goa-icon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.goa-icon {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'goa-icon' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.goa-audio:before {
+  content: "\e900";
+}
+.goa-chevron-left:before {
+  content: "\e901";
+}
+.goa-chevron-right:before {
+  content: "\e902";
+}
+.goa-close:before {
+  content: "\e903";
+}
+.goa-comment:before {
+  content: "\e904";
+}
+.goa-link:before {
+  content: "\e905";
+}
+.goa-loading:before {
+  content: "\e906";
+}
+.goa-logo:before {
+  content: "\e907";
+}
+.goa-menu:before {
+  content: "\e908";
+}
+.goa-pencil:before {
+  content: "\e909";
+}
+.goa-pics:before {
+  content: "\e90a";
+}
+.goa-search:before {
+  content: "\e90b";
+}
+.goa-share:before {
+  content: "\e90c";
+}
+.goa-tag:before {
+  content: "\e90d";
+}
+.goa-video:before {
+  content: "\e90e";
+}

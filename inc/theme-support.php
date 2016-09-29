@@ -61,5 +61,21 @@ function goa_theme_posted_meta() {
 }
 
 function goa_theme_posted_footer() {
-    return 'posted footer';
+    
+    $comments_num  = get_comments_number();
+    if( comments_open() ):
+        // get comments link
+        if( $comments_num == 0 ):
+           $comments = __( 'No Comments', 'goa-theme' ); 
+        elseif( $comments_num > 1 ):
+           $comments = $comments_num . __( ' Comments', 'goa-theme' ); 
+        else:
+           $comments = __( '1 Comment', 'goa-theme' ); 
+        endif;
+        $comments = '<a href="'. get_comments_link() .'" class="comments-link">'. $comments .'<span class="goa-icon goa-comment"></span></a>';
+    else:
+        $comments = __( 'Comments are closed', 'goa-theme' );
+    endif;
+    
+    return '<div class="post-footer-container"><div class="container"><div class="row"><div class="col-xs-12 col-sm-6">' . get_the_tag_list('<div class="tags-list"><span class="goa-icon goa-tag"></span>',' ', '</div>' ) . '</div><div class="col-xs-12 col-sm-6 text-right">' . $comments . '</div></div></div></div>';
 }
